@@ -3,10 +3,10 @@
     <label :class="[
       'base-search-input__label',
       { 'move-label': isInputFocused || modelValue }
-    ]">{{ label }}</label>
+    ]" for="input">{{ label }}</label>
     <div class="base-search-input__wrapper">
       <input class="base-search-input__field-input" @input="onInput" @focus="focusInput" @blur="unfocusInput"
-        :value="modelValue" />
+        :value="modelValue" id="input" />
     </div>
   </div>
 </template>

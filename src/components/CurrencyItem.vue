@@ -2,11 +2,12 @@
   <div class="currency-item" :key="item.cc">
     <p class="currency-item__text">1 {{ item.txt }} {{ item.cc }} = {{ item.rate }} Гривня UAH</p>
     <input v-if="isShowInput" v-model="newValue" class="currency-item__input" type="number" v-focus />
-    <img src="@/assets/icon-edit.svg" class="currency-item__edit" @click="switchEdit" alt="icon-edit" />
+    <img :src="require(`@/assets/icon-${iconName}.svg`)" class="currency-item__edit" @click="switchEdit"
+      alt="icon-edit" />
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import store from '@/store'
 
 export default {
@@ -18,6 +19,11 @@ export default {
   setup(props) {
     const newValue = ref(null)
     const isShowInput = ref(false)
+
+    const iconName = computed(() => {
+      return isShowInput.value === false ? 'edit' : 'accept'
+    })
+
     const switchEdit = () => {
       if (isShowInput.value === true && newValue.value)
         store.commit('currency/changeCurrency', {
@@ -28,7 +34,7 @@ export default {
       isShowInput.value = !isShowInput.value
     }
 
-    return { switchEdit, isShowInput, newValue }
+    return { switchEdit, isShowInput, newValue, iconName }
   },
 
   directives: {
